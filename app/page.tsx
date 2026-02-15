@@ -3,9 +3,9 @@
 import { useEffect } from "react"
 import { BookingProvider, useBooking } from "@/contexts/booking-context"
 import type { UserInfo, PaymentInfo } from "@/contexts/booking-context"
-import { StepOne } from "@/components/booking-steps/step-one"
-import { StepTwo } from "@/components/booking-steps/step-two"
-import { StepThree } from "@/components/booking-steps/step-three"
+import { UserInfoStep } from "@/components/booking-steps/user-info-step"
+import { PaymentInfoStep } from "@/components/booking-steps/payment-info-step"
+import { SuccessStep } from "@/components/booking-steps/success-step"
 
 function BookingFlow() {
   const { state, step, setUserInfo, setPaymentInfo, setStep } = useBooking()
@@ -28,9 +28,9 @@ function BookingFlow() {
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-8">
-      {step === "userinfo" && <StepOne onSubmit={handleUserSubmit} />}
-      {step === "paymentinfo" && <StepTwo onSubmit={handlePaymentSubmit} />}
-      {step === "success" && <StepThree />}
+      {step === "userinfo" && <UserInfoStep onSubmit={handleUserSubmit} />}
+      {step === "paymentinfo" && <PaymentInfoStep onSubmit={handlePaymentSubmit} />}
+      {step === "success" && <SuccessStep />}
     </main>
   )
 }
