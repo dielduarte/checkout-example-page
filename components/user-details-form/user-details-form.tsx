@@ -11,7 +11,7 @@ import type { UserInfo } from "@/contexts/booking-context"
 import {
   userDetailsSchema,
   type UserDetailsFormValues,
-} from "./user-details-schema"
+} from "./schema"
 
 interface UserDetailsFormProps {
   className?: string
