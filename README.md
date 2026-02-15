@@ -2,6 +2,8 @@
 
 You can play with the project live here: [https://checkout-example-page.vercel.app/](https://checkout-example-page.vercel.app/)
 
+note: In the case of live example, you will need to input a valid credit card number because of lunh validation. Locally you can input anything.
+
 ## Setup instructions
 
 
