@@ -46,9 +46,10 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
               name="fullName"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid || undefined}>
-                  <FieldLabel>Full Name</FieldLabel>
+                  <FieldLabel htmlFor="fullName">Full Name</FieldLabel>
                   <Input
                     {...field}
+                    id="fullName"
                     placeholder="Input text"
                     aria-invalid={fieldState.invalid || undefined}
                   />
@@ -63,9 +64,10 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
               name="email"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid || undefined}>
-                  <FieldLabel>Email</FieldLabel>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
                   <Input
                     {...field}
+                    id="email"
                     type="email"
                     placeholder="Input text"
                     aria-invalid={fieldState.invalid || undefined}
@@ -81,9 +83,10 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
               name="phone"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid || undefined}>
-                  <FieldLabel>Phone</FieldLabel>
+                  <FieldLabel htmlFor="phone">Phone</FieldLabel>
                   <Input
                     {...field}
+                    id="phone"
                     type="tel"
                     placeholder="Input text"
                     aria-invalid={fieldState.invalid || undefined}
@@ -99,8 +102,8 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
               name="visitReason"
               render={({ field }) => (
                 <Field>
-                  <FieldLabel>Visit reason</FieldLabel>
-                  <Textarea {...field} placeholder="Input text" />
+                  <FieldLabel htmlFor="visitReason">Visit reason</FieldLabel>
+                  <Textarea {...field} id="visitReason" placeholder="Input text" />
                 </Field>
               )}
             />
