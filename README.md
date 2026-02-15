@@ -50,6 +50,7 @@ How I prompt is envolving everyday, I'm still learning, but I see myself most pr
 - Inconsitent navigation UX, step 1 uses a floating footer, step 2 uses the button as part of the form stack. Doing exactly like figma, but would want to change it in real life.
 - Unit tests over e2e tests, faster to write and run, but don't cover the full user flow across steps
 - The app assumes a linear, uninterrupted flow (user info → payment → success). In production, you'd need to handle edge cases like session expiration, network failures mid-checkout, users refreshing the page and losing state, and partial form recovery.
+- No input masks, not the best UX right now, in real world would defintely add it, but also requires a bit more testing time, phone, zipcode, card number.
 
 ## Scope decisions
 
