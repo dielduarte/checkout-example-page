@@ -31,6 +31,7 @@ export function CompanyInfo({
               width={96}
               height={96}
               className="size-full object-cover"
+              loading="eager"
             />
           </div>
           <h2 className="text-lg font-bold">{name}</h2>
