@@ -37,16 +37,16 @@ export function CompanyInfo({
         </div>
 
         <div className="grid w-full grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
-          <Label className="text-muted-foreground">Address</Label>
+          <Label className="text-muted-foreground flex items-start">Address</Label>
           <span className="whitespace-pre-line">{address}</span>
 
           <Label className="text-muted-foreground">Email</Label>
-          <Button variant="link" asChild>
-            <a href={`mailto:${email}`}>{email}</a>
+          <Button variant="link" asChild size="auto" className="justify-start">
+            <a href={`mailto:${email}`} >{email}</a>
           </Button>
 
           <Label className="text-muted-foreground">Phone</Label>
-          <Button variant="link" asChild>
+          <Button variant="link" asChild size="auto" className="justify-start">
             <a href={`tel:${phone}`}>{phone}</a>
           </Button>
         </div>
