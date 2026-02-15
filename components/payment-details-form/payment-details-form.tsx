@@ -18,7 +18,7 @@ import type { PaymentInfo } from "@/contexts/booking-context"
 import {
   paymentDetailsSchema,
   type PaymentDetailsFormValues,
-} from "./payment-details-schema"
+} from "./schema"
 
 interface PaymentDetailsFormProps {
   className?: string
