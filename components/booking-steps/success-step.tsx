@@ -5,7 +5,7 @@ import { companyData, servicesData, successData } from "@/lib/booking-data"
 
 export function SuccessStep() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 max-w-[542px] mx-auto">
       <SuccessMessage {...successData} />
       <CompanyInfo {...companyData} />
       <ServicesCard services={servicesData} />
