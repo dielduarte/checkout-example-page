@@ -3,7 +3,7 @@ import { ServicesCard } from "@/components/services-card/services-card"
 import { SuccessMessage } from "@/components/success-message/success-message"
 import { companyData, servicesData, successData } from "@/lib/booking-data"
 
-export function StepThree() {
+export function SuccessStep() {
   return (
     <div className="flex flex-col gap-6">
       <SuccessMessage {...successData} />
