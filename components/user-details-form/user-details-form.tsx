@@ -1,11 +1,17 @@
 "use client"
 
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Field, FieldLabel, FieldGroup } from "@/components/ui/field"
+import { Field, FieldLabel, FieldGroup, FieldError } from "@/components/ui/field"
 import type { UserInfo } from "@/contexts/booking-context"
+import {
+  userDetailsSchema,
+  type UserDetailsFormValues,
+} from "./user-details-schema"
 
 interface UserDetailsFormProps {
   className?: string
@@ -13,42 +19,91 @@ interface UserDetailsFormProps {
 }
 
 export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const data: UserInfo = {
-      fullName: formData.get("fullName") as string,
-      email: formData.get("email") as string,
-      phone: formData.get("phone") as string,
-      visitReason: formData.get("visitReason") as string,
-    }
+  const { control, handleSubmit } = useForm<UserDetailsFormValues>({
+    resolver: zodResolver(userDetailsSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      visitReason: "",
+    },
+  })
+
+  function onValid(data: UserDetailsFormValues) {
     onSubmit?.(data)
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onValid)}>
       <Card className={className}>
         <CardHeader>
           <CardTitle>Enter your details below</CardTitle>
         </CardHeader>
         <CardContent>
           <FieldGroup>
-            <Field>
-              <FieldLabel>Full Name</FieldLabel>
-              <Input name="fullName" placeholder="Input text" />
-            </Field>
-            <Field>
-              <FieldLabel>Email</FieldLabel>
-              <Input name="email" type="email" placeholder="Input text" />
-            </Field>
-            <Field>
-              <FieldLabel>Phone</FieldLabel>
-              <Input name="phone" type="tel" placeholder="Input text" />
-            </Field>
-            <Field>
-              <FieldLabel>Visit reason</FieldLabel>
-              <Textarea name="visitReason" placeholder="Input text" />
-            </Field>
+            <Controller
+              control={control}
+              name="fullName"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid || undefined}>
+                  <FieldLabel>Full Name</FieldLabel>
+                  <Input
+                    {...field}
+                    placeholder="Input text"
+                    aria-invalid={fieldState.invalid || undefined}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              control={control}
+              name="email"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid || undefined}>
+                  <FieldLabel>Email</FieldLabel>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="Input text"
+                    aria-invalid={fieldState.invalid || undefined}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              control={control}
+              name="phone"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid || undefined}>
+                  <FieldLabel>Phone</FieldLabel>
+                  <Input
+                    {...field}
+                    type="tel"
+                    placeholder="Input text"
+                    aria-invalid={fieldState.invalid || undefined}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              control={control}
+              name="visitReason"
+              render={({ field }) => (
+                <Field>
+                  <FieldLabel>Visit reason</FieldLabel>
+                  <Textarea {...field} placeholder="Input text" />
+                </Field>
+              )}
+            />
           </FieldGroup>
         </CardContent>
       </Card>
