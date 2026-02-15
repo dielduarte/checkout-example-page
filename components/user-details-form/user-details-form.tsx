@@ -34,7 +34,7 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onValid)}>
+    <form onSubmit={handleSubmit(onValid)} className="pb-20">
       <Card className={className}>
         <CardHeader>
           <CardTitle>Enter your details below</CardTitle>
@@ -111,8 +111,8 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
         </CardContent>
       </Card>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t px-6 py-4">
-        <div className="flex justify-end max-w-md mx-auto">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t px-6 py-4">
+        <div className="flex justify-end max-w-6xl mx-auto">
           <Button type="submit" variant="default">Continue</Button>
         </div>
       </div>

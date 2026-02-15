@@ -27,7 +27,8 @@ function BookingFlow() {
   }, [step, state])
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
+    <main className="mx-auto max-w-6xl px-4 py-8">
+      <h1 className="text-2xl font-bold text-center md:text-left mb-6">Book appointment</h1>
       {step === "userinfo" && <UserInfoStep onSubmit={handleUserSubmit} />}
       {step === "paymentinfo" && <PaymentInfoStep onSubmit={handlePaymentSubmit} />}
       {step === "success" && <SuccessStep />}
