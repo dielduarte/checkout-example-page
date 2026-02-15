@@ -18,10 +18,10 @@ export function SuccessMessage({
         <Image
           src="/images/success-icon.svg"
           alt=""
-          width={120}
-          height={120}
+          width={200}
+          height={200}
         />
-        <div className="space-y-2 text-center">
+        <div className="space-y-4 text-center">
           <p className="text-muted-foreground text-lg font-medium">{title}</p>
           <p className="text-foreground text-sm">{description}</p>
         </div>
