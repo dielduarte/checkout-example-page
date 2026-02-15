@@ -20,6 +20,7 @@ interface UserDetailsFormProps {
 
 export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
   const { control, handleSubmit } = useForm<UserDetailsFormValues>({
+    mode: "onBlur",
     resolver: zodResolver(userDetailsSchema),
     defaultValues: {
       fullName: "",
