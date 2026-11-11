@@ -7,14 +7,7 @@ export const paymentDetailsSchema = z.object({
   cardNumber: z
     .string()
     .min(1, "Card number is required")
-    .regex(/^[\d\s-]+$/, "Card number must contain only digits")
-    .refine(
-      (val) => {
-        const d = val.replace(/[\s-]/g, "")
-        return d.length >= 13 && d.length <= 19
-      },
-      "Card number must be between 13 and 19 digits"
-    )
+    .regex(/^\d{13,19}$/, "Card number must be between 13 and 19 digits")
     .refine(
       (val) => isDev || isValidLuhn(val),
       "Invalid card number"
@@ -22,7 +15,7 @@ export const paymentDetailsSchema = z.object({
   expiryDate: z
     .string()
     .min(1, "Expiry date is required")
-    .regex(/^\d{2}\s?\/\s?\d{2}$/, "Expiry date must be in MM/YY format"),
+    .regex(/^\d{2}\/\d{2}$/, "Expiry date must be in MM/YY format"),
   cvv: z
     .string()
     .min(1, "CVV is required")

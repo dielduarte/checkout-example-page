@@ -26,7 +26,7 @@ describe("PaymentDetailsForm", () => {
   it("shows a numeric keyboard for digit-only payment fields", () => {
     render(<PaymentDetailsForm />)
 
-    for (const label of ["Card information", "CVV", "Billing zip code"]) {
+    for (const label of ["Card information", "Expiry date", "CVV", "Billing zip code"]) {
       expect(screen.getByLabelText(label)).toHaveAttribute("inputmode", "numeric")
     }
   })
@@ -51,7 +51,7 @@ describe("PaymentDetailsForm", () => {
     render(<PaymentDetailsForm />)
 
     await user.type(screen.getByLabelText("Card information"), "123456")
-    await user.type(screen.getByLabelText("Expiry date"), "1325")
+    await user.type(screen.getByLabelText("Expiry date"), "13")
     await user.type(screen.getByLabelText("CVV"), "12")
     await user.type(screen.getByLabelText("Billing zip code"), "123")
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
@@ -221,7 +221,7 @@ describe("PaymentDetailsForm", () => {
     })
   })
 
-  it("accepts card number with spaces in the form", async () => {
+  it("submits the card number as digits only", async () => {
     const user = userEvent.setup()
     const onSubmit = vi.fn()
     render(<PaymentDetailsForm onSubmit={onSubmit} />)
@@ -235,20 +235,51 @@ describe("PaymentDetailsForm", () => {
 
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({ cardNumber: "4111 1111 1111 1111" })
+        expect.objectContaining({ cardNumber: "4111111111111111" })
       )
     })
   })
 
-  it("rejects letters in card number field", async () => {
+  it("formats payment fields as the user types", async () => {
+    const user = userEvent.setup()
+    render(<PaymentDetailsForm />)
+
+    await user.type(screen.getByLabelText("Card information"), "4111111111111111")
+    await user.type(screen.getByLabelText("Expiry date"), "1229")
+    await user.type(screen.getByLabelText("CVV"), "12345")
+    await user.type(screen.getByLabelText("Billing zip code"), "123456789")
+
+    expect(screen.getByLabelText("Card information")).toHaveValue("4111 1111 1111 1111")
+    expect(screen.getByLabelText("Expiry date")).toHaveValue("12/29")
+    expect(screen.getByLabelText("CVV")).toHaveValue("1234")
+    expect(screen.getByLabelText("Billing zip code")).toHaveValue("12345-6789")
+  })
+
+  it("ignores letters typed into the card number", async () => {
     const user = userEvent.setup()
     render(<PaymentDetailsForm />)
 
     await user.type(screen.getByLabelText("Card information"), "abcd1234efgh5678")
+
+    expect(screen.getByLabelText("Card information")).toHaveValue("1234 5678")
+  })
+
+  it("submits ZIP+4 with its dash", async () => {
+    const user = userEvent.setup()
+    const onSubmit = vi.fn()
+    render(<PaymentDetailsForm onSubmit={onSubmit} />)
+
+    await user.type(screen.getByLabelText("Card information"), "4111111111111111")
+    await user.type(screen.getByLabelText("Expiry date"), "1229")
+    await user.type(screen.getByLabelText("CVV"), "123")
+    await user.type(screen.getByLabelText("Billing zip code"), "123456789")
+    await user.click(screen.getByRole("checkbox"))
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
     await waitFor(() => {
-      expect(screen.getByText("Card number must contain only digits")).toBeInTheDocument()
+      expect(onSubmit).toHaveBeenCalledWith(
+        expect.objectContaining({ expiryDate: "12/29", billingZip: "12345-6789" })
+      )
     })
   })
 })

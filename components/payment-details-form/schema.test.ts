@@ -37,7 +37,7 @@ describe("paymentDetailsSchema", () => {
     it("rejects letters in card number", () => {
       const result = paymentDetailsSchema.safeParse({ ...validData, cardNumber: "abcd1234efgh5678" })
       expect(result.success).toBe(false)
-      expect(result.error!.issues[0].message).toBe("Card number must contain only digits")
+      expect(result.error!.issues[0].message).toBe("Card number must be between 13 and 19 digits")
     })
 
     it("rejects card number with fewer than 13 digits", () => {
@@ -64,14 +64,9 @@ describe("paymentDetailsSchema", () => {
       expect(result.success).toBe(true)
     })
 
-    it("accepts card number with spaces", () => {
+    it("rejects formatted card number, the form submits digits only", () => {
       const result = paymentDetailsSchema.safeParse({ ...validData, cardNumber: "4111 1111 1111 1111" })
-      expect(result.success).toBe(true)
-    })
-
-    it("accepts card number with dashes", () => {
-      const result = paymentDetailsSchema.safeParse({ ...validData, cardNumber: "4111-1111-1111-1111" })
-      expect(result.success).toBe(true)
+      expect(result.success).toBe(false)
     })
   })
 
@@ -88,9 +83,10 @@ describe("paymentDetailsSchema", () => {
       expect(result.error!.issues[0].message).toBe("Expiry date must be in MM/YY format")
     })
 
-    it("accepts expiry with spaces (12 / 25)", () => {
+    it("rejects expiry with spaces (12 / 25)", () => {
       const result = paymentDetailsSchema.safeParse({ ...validData, expiryDate: "12 / 25" })
-      expect(result.success).toBe(true)
+      expect(result.success).toBe(false)
+      expect(result.error!.issues[0].message).toBe("Expiry date must be in MM/YY format")
     })
 
     it("accepts standard MM/YY format", () => {

@@ -2,6 +2,7 @@
 
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { NumberFormatBase } from "react-number-format"
 import {
   Card,
   CardHeader,
@@ -21,6 +22,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import type { PaymentInfo } from "@/contexts/booking-context"
+import { cardNumberMask, cvvMask, expiryDateMask, zipCodeMask } from "@/lib/masks"
 import {
   paymentDetailsSchema,
   type PaymentDetailsFormValues,
@@ -65,11 +67,18 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid || undefined}>
                   <FieldLabel htmlFor="cardNumber">Card information</FieldLabel>
-                  <Input
-                    {...field}
+                  <NumberFormatBase
+                    {...cardNumberMask}
+                    customInput={Input}
+                    valueIsNumericString
+                    value={field.value}
+                    onValueChange={({ value }) => field.onChange(value)}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    getInputRef={field.ref}
                     id="cardNumber"
-                    autoComplete="cc-number"
                     inputMode="numeric"
+                    autoComplete="cc-number"
                     placeholder="1234 1234 1234 1234"
                     aria-invalid={fieldState.invalid || undefined}
                     aria-describedby={fieldState.invalid ? "cardNumber-error" : undefined}
@@ -89,11 +98,18 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
                     <FieldLabel htmlFor="expiryDate" className="sr-only">
                       Expiry date
                     </FieldLabel>
-                    <Input
-                      {...field}
+                    <NumberFormatBase
+                      {...expiryDateMask}
+                      customInput={Input}
+                      value={field.value}
+                      onValueChange={({ formattedValue }) => field.onChange(formattedValue)}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      getInputRef={field.ref}
                       id="expiryDate"
+                      inputMode="numeric"
                       autoComplete="cc-exp"
-                      placeholder="MM / YY"
+                      placeholder="MM/YY"
                       aria-invalid={fieldState.invalid || undefined}
                       aria-describedby={fieldState.invalid ? "expiryDate-error" : undefined}
                     />
@@ -111,11 +127,18 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
                     <FieldLabel htmlFor="cvv" className="sr-only">
                       CVV
                     </FieldLabel>
-                    <Input
-                      {...field}
+                    <NumberFormatBase
+                      {...cvvMask}
+                      customInput={Input}
+                      valueIsNumericString
+                      value={field.value}
+                      onValueChange={({ value }) => field.onChange(value)}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      getInputRef={field.ref}
                       id="cvv"
-                      autoComplete="cc-csc"
                       inputMode="numeric"
+                      autoComplete="cc-csc"
                       placeholder="CVV"
                       aria-invalid={fieldState.invalid || undefined}
                       aria-describedby={fieldState.invalid ? "cvv-error" : undefined}
@@ -135,11 +158,17 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
                   <FieldLabel htmlFor="billingZip" className="sr-only">
                     Billing zip code
                   </FieldLabel>
-                  <Input
-                    {...field}
+                  <NumberFormatBase
+                    {...zipCodeMask}
+                    customInput={Input}
+                    value={field.value}
+                    onValueChange={({ formattedValue }) => field.onChange(formattedValue)}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    getInputRef={field.ref}
                     id="billingZip"
-                    autoComplete="postal-code"
                     inputMode="numeric"
+                    autoComplete="postal-code"
                     placeholder="Billing zip code"
                     aria-invalid={fieldState.invalid || undefined}
                     aria-describedby={fieldState.invalid ? "billingZip-error" : undefined}
