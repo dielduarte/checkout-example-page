@@ -68,6 +68,8 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
                   <Input
                     {...field}
                     id="cardNumber"
+                    autoComplete="cc-number"
+                    inputMode="numeric"
                     placeholder="1234 1234 1234 1234"
                     aria-invalid={fieldState.invalid || undefined}
                     aria-describedby={fieldState.invalid ? "cardNumber-error" : undefined}
@@ -90,6 +92,7 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
                     <Input
                       {...field}
                       id="expiryDate"
+                      autoComplete="cc-exp"
                       placeholder="MM / YY"
                       aria-invalid={fieldState.invalid || undefined}
                       aria-describedby={fieldState.invalid ? "expiryDate-error" : undefined}
@@ -111,6 +114,8 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
                     <Input
                       {...field}
                       id="cvv"
+                      autoComplete="cc-csc"
+                      inputMode="numeric"
                       placeholder="CVV"
                       aria-invalid={fieldState.invalid || undefined}
                       aria-describedby={fieldState.invalid ? "cvv-error" : undefined}
@@ -133,6 +138,8 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
                   <Input
                     {...field}
                     id="billingZip"
+                    autoComplete="postal-code"
+                    inputMode="numeric"
                     placeholder="Billing zip code"
                     aria-invalid={fieldState.invalid || undefined}
                     aria-describedby={fieldState.invalid ? "billingZip-error" : undefined}

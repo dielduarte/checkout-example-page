@@ -14,6 +14,23 @@ describe("PaymentDetailsForm", () => {
     expect(screen.getByRole("button", { name: "Book appointment" })).toBeInTheDocument()
   })
 
+  it("lets browsers autofill payment fields", () => {
+    render(<PaymentDetailsForm />)
+
+    expect(screen.getByLabelText("Card information")).toHaveAttribute("autocomplete", "cc-number")
+    expect(screen.getByLabelText("Expiry date")).toHaveAttribute("autocomplete", "cc-exp")
+    expect(screen.getByLabelText("CVV")).toHaveAttribute("autocomplete", "cc-csc")
+    expect(screen.getByLabelText("Billing zip code")).toHaveAttribute("autocomplete", "postal-code")
+  })
+
+  it("shows a numeric keyboard for digit-only payment fields", () => {
+    render(<PaymentDetailsForm />)
+
+    for (const label of ["Card information", "CVV", "Billing zip code"]) {
+      expect(screen.getByLabelText(label)).toHaveAttribute("inputmode", "numeric")
+    }
+  })
+
   it("shows all required errors on empty submit", async () => {
     const user = userEvent.setup()
     render(<PaymentDetailsForm />)

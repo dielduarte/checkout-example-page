@@ -51,7 +51,8 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
                   <Input
                     {...field}
                     id="fullName"
-                    placeholder="Input text"
+                    autoComplete="name"
+                    placeholder="Jane Doe"
                     aria-invalid={fieldState.invalid || undefined}
                     aria-describedby={fieldState.invalid ? "fullName-error" : undefined}
                   />
@@ -70,8 +71,9 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
                   <Input
                     {...field}
                     id="email"
+                    autoComplete="email"
                     type="email"
-                    placeholder="Input text"
+                    placeholder="jane@example.com"
                     aria-invalid={fieldState.invalid || undefined}
                     aria-describedby={fieldState.invalid ? "email-error" : undefined}
                   />
@@ -90,8 +92,9 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
                   <Input
                     {...field}
                     id="phone"
+                    autoComplete="tel"
                     type="tel"
-                    placeholder="Input text"
+                    placeholder="5551234567"
                     aria-invalid={fieldState.invalid || undefined}
                     aria-describedby={fieldState.invalid ? "phone-error" : undefined}
                   />
@@ -107,7 +110,11 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
               render={({ field }) => (
                 <Field>
                   <FieldLabel htmlFor="visitReason">Visit reason</FieldLabel>
-                  <Textarea {...field} id="visitReason" placeholder="Input text" />
+                  <Textarea
+                    {...field}
+                    id="visitReason"
+                    placeholder="Anything we should know before your visit?"
+                  />
                 </Field>
               )}
             />

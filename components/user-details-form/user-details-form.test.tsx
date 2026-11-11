@@ -14,6 +14,14 @@ describe("UserDetailsForm", () => {
     expect(screen.getByRole("button", { name: "Continue" })).toBeInTheDocument()
   })
 
+  it("lets browsers autofill contact fields", () => {
+    render(<UserDetailsForm />)
+
+    expect(screen.getByLabelText("Full Name")).toHaveAttribute("autocomplete", "name")
+    expect(screen.getByLabelText("Email")).toHaveAttribute("autocomplete", "email")
+    expect(screen.getByLabelText("Phone")).toHaveAttribute("autocomplete", "tel")
+  })
+
   it("shows required errors on empty submit", async () => {
     const user = userEvent.setup()
     render(<UserDetailsForm />)
