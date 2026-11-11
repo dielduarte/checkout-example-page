@@ -14,11 +14,10 @@ const validData = {
  * so `isDev` is re-evaluated with the correct value.
  */
 async function importSchemaWithNodeEnv(nodeEnv: string) {
-  const prev = process.env.NODE_ENV
-  process.env.NODE_ENV = nodeEnv
+  vi.stubEnv("NODE_ENV", nodeEnv)
   vi.resetModules()
   const mod = await import("./schema")
-  process.env.NODE_ENV = prev
+  vi.unstubAllEnvs()
   return mod
 }
 

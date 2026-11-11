@@ -201,11 +201,10 @@ describe("PaymentDetailsForm", () => {
 
   it("shows Luhn error for card that passes length but fails checksum", async () => {
     // Re-import component with NODE_ENV=test so Luhn validation is active
-    const prev = process.env.NODE_ENV
-    process.env.NODE_ENV = "test"
+    vi.stubEnv("NODE_ENV", "test")
     vi.resetModules()
     const { PaymentDetailsForm: Form } = await import("./payment-details-form")
-    process.env.NODE_ENV = prev
+    vi.unstubAllEnvs()
 
     const user = userEvent.setup()
     render(<Form />)
