@@ -68,6 +68,23 @@ describe("UserDetailsForm", () => {
     })
   })
 
+  it("links each error message to its input as accessible description", async () => {
+    const user = userEvent.setup()
+    render(<UserDetailsForm />)
+
+    await user.click(screen.getByRole("button", { name: "Continue" }))
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Full Name")).toHaveAccessibleDescription(
+        "Full name is required"
+      )
+      expect(screen.getByLabelText("Email")).toHaveAccessibleDescription("Email is required")
+      expect(screen.getByLabelText("Phone")).toHaveAccessibleDescription(
+        "Phone number is required"
+      )
+    })
+  })
+
   it("calls onSubmit with correct data on valid submission", async () => {
     const user = userEvent.setup()
     const onSubmit = vi.fn()

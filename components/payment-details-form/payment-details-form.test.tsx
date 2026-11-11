@@ -33,10 +33,10 @@ describe("PaymentDetailsForm", () => {
     const user = userEvent.setup()
     render(<PaymentDetailsForm />)
 
-    await user.type(screen.getByPlaceholderText("1234 1234 1234 1234"), "123456")
-    await user.type(screen.getByPlaceholderText("MM / YY"), "1325")
-    await user.type(screen.getByPlaceholderText("CVV"), "12")
-    await user.type(screen.getByPlaceholderText("Billing zip code"), "123")
+    await user.type(screen.getByLabelText("Card information"), "123456")
+    await user.type(screen.getByLabelText("Expiry date"), "1325")
+    await user.type(screen.getByLabelText("CVV"), "12")
+    await user.type(screen.getByLabelText("Billing zip code"), "123")
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
     await waitFor(() => {
@@ -56,9 +56,29 @@ describe("PaymentDetailsForm", () => {
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText("1234 1234 1234 1234")).toHaveAttribute(
+      expect(screen.getByLabelText("Card information")).toHaveAttribute(
         "aria-invalid",
         "true"
+      )
+    })
+  })
+
+  it("links each error message to its input as accessible description", async () => {
+    const user = userEvent.setup()
+    render(<PaymentDetailsForm />)
+
+    await user.click(screen.getByRole("button", { name: "Book appointment" }))
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Card information")).toHaveAccessibleDescription(
+        "Card number is required"
+      )
+      expect(screen.getByLabelText("Expiry date")).toHaveAccessibleDescription(
+        "Expiry date is required"
+      )
+      expect(screen.getByLabelText("CVV")).toHaveAccessibleDescription("CVV is required")
+      expect(screen.getByLabelText("Billing zip code")).toHaveAccessibleDescription(
+        "Billing zip code is required"
       )
     })
   })
@@ -68,10 +88,10 @@ describe("PaymentDetailsForm", () => {
     const onSubmit = vi.fn()
     render(<PaymentDetailsForm onSubmit={onSubmit} />)
 
-    await user.type(screen.getByPlaceholderText("1234 1234 1234 1234"), "4111111111111111")
-    await user.type(screen.getByPlaceholderText("MM / YY"), "12/25")
-    await user.type(screen.getByPlaceholderText("CVV"), "123")
-    await user.type(screen.getByPlaceholderText("Billing zip code"), "12345")
+    await user.type(screen.getByLabelText("Card information"), "4111111111111111")
+    await user.type(screen.getByLabelText("Expiry date"), "12/25")
+    await user.type(screen.getByLabelText("CVV"), "123")
+    await user.type(screen.getByLabelText("Billing zip code"), "12345")
     await user.click(screen.getByRole("checkbox"))
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
@@ -105,10 +125,10 @@ describe("PaymentDetailsForm", () => {
     const onSubmit = vi.fn()
     render(<PaymentDetailsForm onSubmit={onSubmit} />)
 
-    await user.type(screen.getByPlaceholderText("1234 1234 1234 1234"), "4111111111111111")
-    await user.type(screen.getByPlaceholderText("MM / YY"), "12/25")
-    await user.type(screen.getByPlaceholderText("CVV"), "123")
-    await user.type(screen.getByPlaceholderText("Billing zip code"), "12345")
+    await user.type(screen.getByLabelText("Card information"), "4111111111111111")
+    await user.type(screen.getByLabelText("Expiry date"), "12/25")
+    await user.type(screen.getByLabelText("CVV"), "123")
+    await user.type(screen.getByLabelText("Billing zip code"), "12345")
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
     await waitFor(() => {
@@ -125,13 +145,13 @@ describe("PaymentDetailsForm", () => {
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText("1234 1234 1234 1234")).toHaveAttribute(
+      expect(screen.getByLabelText("Card information")).toHaveAttribute(
         "aria-invalid",
         "true"
       )
-      expect(screen.getByPlaceholderText("MM / YY")).toHaveAttribute("aria-invalid", "true")
-      expect(screen.getByPlaceholderText("CVV")).toHaveAttribute("aria-invalid", "true")
-      expect(screen.getByPlaceholderText("Billing zip code")).toHaveAttribute(
+      expect(screen.getByLabelText("Expiry date")).toHaveAttribute("aria-invalid", "true")
+      expect(screen.getByLabelText("CVV")).toHaveAttribute("aria-invalid", "true")
+      expect(screen.getByLabelText("Billing zip code")).toHaveAttribute(
         "aria-invalid",
         "true"
       )
@@ -149,10 +169,10 @@ describe("PaymentDetailsForm", () => {
     const user = userEvent.setup()
     render(<Form />)
 
-    await user.type(screen.getByPlaceholderText("1234 1234 1234 1234"), "4111111111111112")
-    await user.type(screen.getByPlaceholderText("MM / YY"), "12/25")
-    await user.type(screen.getByPlaceholderText("CVV"), "123")
-    await user.type(screen.getByPlaceholderText("Billing zip code"), "12345")
+    await user.type(screen.getByLabelText("Card information"), "4111111111111112")
+    await user.type(screen.getByLabelText("Expiry date"), "12/25")
+    await user.type(screen.getByLabelText("CVV"), "123")
+    await user.type(screen.getByLabelText("Billing zip code"), "12345")
     await user.click(screen.getByRole("checkbox"))
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
@@ -166,10 +186,10 @@ describe("PaymentDetailsForm", () => {
     const onSubmit = vi.fn()
     render(<PaymentDetailsForm onSubmit={onSubmit} />)
 
-    await user.type(screen.getByPlaceholderText("1234 1234 1234 1234"), "4111 1111 1111 1111")
-    await user.type(screen.getByPlaceholderText("MM / YY"), "12/25")
-    await user.type(screen.getByPlaceholderText("CVV"), "123")
-    await user.type(screen.getByPlaceholderText("Billing zip code"), "12345")
+    await user.type(screen.getByLabelText("Card information"), "4111 1111 1111 1111")
+    await user.type(screen.getByLabelText("Expiry date"), "12/25")
+    await user.type(screen.getByLabelText("CVV"), "123")
+    await user.type(screen.getByLabelText("Billing zip code"), "12345")
     await user.click(screen.getByRole("checkbox"))
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
@@ -184,7 +204,7 @@ describe("PaymentDetailsForm", () => {
     const user = userEvent.setup()
     render(<PaymentDetailsForm />)
 
-    await user.type(screen.getByPlaceholderText("1234 1234 1234 1234"), "abcd1234efgh5678")
+    await user.type(screen.getByLabelText("Card information"), "abcd1234efgh5678")
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
 
     await waitFor(() => {

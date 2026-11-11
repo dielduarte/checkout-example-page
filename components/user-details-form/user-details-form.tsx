@@ -53,9 +53,10 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
                     id="fullName"
                     placeholder="Input text"
                     aria-invalid={fieldState.invalid || undefined}
+                    aria-describedby={fieldState.invalid ? "fullName-error" : undefined}
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError id="fullName-error" errors={[fieldState.error]} />
                   )}
                 </Field>
               )}
@@ -72,9 +73,10 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
                     type="email"
                     placeholder="Input text"
                     aria-invalid={fieldState.invalid || undefined}
+                    aria-describedby={fieldState.invalid ? "email-error" : undefined}
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError id="email-error" errors={[fieldState.error]} />
                   )}
                 </Field>
               )}
@@ -91,9 +93,10 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
                     type="tel"
                     placeholder="Input text"
                     aria-invalid={fieldState.invalid || undefined}
+                    aria-describedby={fieldState.invalid ? "phone-error" : undefined}
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError id="phone-error" errors={[fieldState.error]} />
                   )}
                 </Field>
               )}

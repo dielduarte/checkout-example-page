@@ -12,8 +12,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { FieldSeparator, FieldError } from "@/components/ui/field"
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+} from "@/components/ui/field"
 import type { PaymentInfo } from "@/contexts/booking-context"
 import {
   paymentDetailsSchema,
@@ -52,22 +57,24 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-6">
-          <div className="space-y-4">
+          <FieldGroup>
             <Controller
               control={control}
               name="cardNumber"
               render={({ field, fieldState }) => (
-                <div className="space-y-2">
-                  <Label>Card information</Label>
+                <Field data-invalid={fieldState.invalid || undefined}>
+                  <FieldLabel htmlFor="cardNumber">Card information</FieldLabel>
                   <Input
                     {...field}
+                    id="cardNumber"
                     placeholder="1234 1234 1234 1234"
                     aria-invalid={fieldState.invalid || undefined}
+                    aria-describedby={fieldState.invalid ? "cardNumber-error" : undefined}
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError id="cardNumber-error" errors={[fieldState.error]} />
                   )}
-                </div>
+                </Field>
               )}
             />
             <div className="grid grid-cols-2 gap-3">
@@ -75,32 +82,42 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
                 control={control}
                 name="expiryDate"
                 render={({ field, fieldState }) => (
-                  <div className="space-y-2">
+                  <Field data-invalid={fieldState.invalid || undefined}>
+                    <FieldLabel htmlFor="expiryDate" className="sr-only">
+                      Expiry date
+                    </FieldLabel>
                     <Input
                       {...field}
+                      id="expiryDate"
                       placeholder="MM / YY"
                       aria-invalid={fieldState.invalid || undefined}
+                      aria-describedby={fieldState.invalid ? "expiryDate-error" : undefined}
                     />
                     {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
+                      <FieldError id="expiryDate-error" errors={[fieldState.error]} />
                     )}
-                  </div>
+                  </Field>
                 )}
               />
               <Controller
                 control={control}
                 name="cvv"
                 render={({ field, fieldState }) => (
-                  <div className="space-y-2">
+                  <Field data-invalid={fieldState.invalid || undefined}>
+                    <FieldLabel htmlFor="cvv" className="sr-only">
+                      CVV
+                    </FieldLabel>
                     <Input
                       {...field}
+                      id="cvv"
                       placeholder="CVV"
                       aria-invalid={fieldState.invalid || undefined}
+                      aria-describedby={fieldState.invalid ? "cvv-error" : undefined}
                     />
                     {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
+                      <FieldError id="cvv-error" errors={[fieldState.error]} />
                     )}
-                  </div>
+                  </Field>
                 )}
               />
             </div>
@@ -108,19 +125,24 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
               control={control}
               name="billingZip"
               render={({ field, fieldState }) => (
-                <div className="space-y-2">
+                <Field data-invalid={fieldState.invalid || undefined}>
+                  <FieldLabel htmlFor="billingZip" className="sr-only">
+                    Billing zip code
+                  </FieldLabel>
                   <Input
                     {...field}
+                    id="billingZip"
                     placeholder="Billing zip code"
                     aria-invalid={fieldState.invalid || undefined}
+                    aria-describedby={fieldState.invalid ? "billingZip-error" : undefined}
                   />
                   {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                    <FieldError id="billingZip-error" errors={[fieldState.error]} />
                   )}
-                </div>
+                </Field>
               )}
             />
-          </div>
+          </FieldGroup>
 
           <Controller
             control={control}
