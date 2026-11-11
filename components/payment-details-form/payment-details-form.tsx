@@ -35,7 +35,7 @@ interface PaymentDetailsFormProps {
 
 export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormProps) {
   const { control, handleSubmit } = useForm<PaymentDetailsFormValues>({
-    mode: "onBlur",
+    mode: "onTouched",
     resolver: zodResolver(paymentDetailsSchema),
     defaultValues: {
       cardNumber: "",

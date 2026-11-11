@@ -98,6 +98,21 @@ describe("UserDetailsForm", () => {
     })
   })
 
+  it("clears a field error as soon as the value becomes valid", async () => {
+    const user = userEvent.setup()
+    render(<UserDetailsForm />)
+
+    await user.type(screen.getByLabelText("Phone"), "555")
+    await user.tab()
+    expect(await screen.findByText("Phone number must be 10 digits")).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText("Phone"), "1234567")
+
+    await waitFor(() => {
+      expect(screen.queryByText("Phone number must be 10 digits")).not.toBeInTheDocument()
+    })
+  })
+
   it("sets aria-invalid on invalid inputs after submit", async () => {
     const user = userEvent.setup()
     render(<UserDetailsForm />)

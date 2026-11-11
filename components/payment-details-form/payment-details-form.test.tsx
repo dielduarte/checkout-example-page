@@ -284,6 +284,21 @@ describe("PaymentDetailsForm", () => {
     expect(await screen.findByText("Card has expired")).toBeInTheDocument()
   })
 
+  it("clears a field error as soon as the value becomes valid", async () => {
+    const user = userEvent.setup()
+    render(<PaymentDetailsForm />)
+
+    await user.type(screen.getByLabelText("CVV"), "12")
+    await user.tab()
+    expect(await screen.findByText("CVV must be 3 or 4 digits")).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText("CVV"), "3")
+
+    await waitFor(() => {
+      expect(screen.queryByText("CVV must be 3 or 4 digits")).not.toBeInTheDocument()
+    })
+  })
+
   it("submits ZIP+4 with its dash", async () => {
     const user = userEvent.setup()
     const onSubmit = vi.fn()
