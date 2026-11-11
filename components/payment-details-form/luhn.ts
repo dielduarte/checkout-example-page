@@ -1,7 +1,3 @@
-/**
- * Validates a card number using the Luhn algorithm.
- * Strips spaces and dashes before checking.
- */
 export function isValidLuhn(value: string): boolean {
   const digits = value.replace(/[\s-]/g, "")
 

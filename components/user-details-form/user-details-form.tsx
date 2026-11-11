@@ -122,7 +122,7 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
         </CardContent>
       </Card>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t px-6 py-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-card border-t px-6 py-4">
         <div className="flex justify-end max-w-6xl mx-auto">
           <Button type="submit" variant="default">Continue</Button>
         </div>
