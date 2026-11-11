@@ -83,6 +83,30 @@ describe("PaymentDetailsForm", () => {
     })
   })
 
+  it("toggles the cancellation policy checkbox when clicking its label", async () => {
+    const user = userEvent.setup()
+    render(<PaymentDetailsForm />)
+
+    await user.click(screen.getByText(/please reschedule or cancel/i))
+
+    expect(
+      screen.getByRole("checkbox", { name: /please reschedule or cancel/i })
+    ).toBeChecked()
+  })
+
+  it("links the cancellation policy error to the checkbox", async () => {
+    const user = userEvent.setup()
+    render(<PaymentDetailsForm />)
+
+    await user.click(screen.getByRole("button", { name: "Book appointment" }))
+
+    await waitFor(() => {
+      expect(screen.getByRole("checkbox")).toHaveAccessibleDescription(
+        "You must accept the cancellation policy"
+      )
+    })
+  })
+
   it("calls onSubmit with correct data on valid submission", async () => {
     const user = userEvent.setup()
     const onSubmit = vi.fn()

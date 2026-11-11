@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import {
   Field,
+  FieldContent,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -148,29 +149,34 @@ export function PaymentDetailsForm({ className, onSubmit }: PaymentDetailsFormPr
             control={control}
             name="acceptedPolicy"
             render={({ field, fieldState }) => (
-              <div className="space-y-2">
-                <div className="flex items-start gap-3">
-                  <Checkbox
-                    id="cancellation-policy"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    aria-invalid={fieldState.invalid || undefined}
-                  />
-                  <label
-                    htmlFor="cancellation-policy"
-                    className="text-sm leading-normal"
-                  >
+              <Field
+                orientation="horizontal"
+                data-invalid={fieldState.invalid || undefined}
+              >
+                <Checkbox
+                  id="cancellationPolicy"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  onBlur={field.onBlur}
+                  ref={field.ref}
+                  aria-invalid={fieldState.invalid || undefined}
+                  aria-describedby={
+                    fieldState.invalid ? "cancellationPolicy-error" : undefined
+                  }
+                />
+                <FieldContent>
+                  <FieldLabel htmlFor="cancellationPolicy" className="font-normal leading-normal">
                     We ask that you please reschedule or cancel at least 24 hours before
                     the beginning of your appointment or you may be charged a
                     cancellation fee of $50. In the event of emergency, contact us
                     directly. Your card will held in case of late cancellation and for
                     future purchases. It will not be charged now.
-                  </label>
-                </div>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </div>
+                  </FieldLabel>
+                  {fieldState.invalid && (
+                    <FieldError id="cancellationPolicy-error" errors={[fieldState.error]} />
+                  )}
+                </FieldContent>
+              </Field>
             )}
           />
 
