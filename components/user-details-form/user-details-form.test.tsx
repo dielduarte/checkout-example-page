@@ -63,6 +63,41 @@ describe("UserDetailsForm", () => {
     })
   })
 
+  it("formats the phone number as the user types", async () => {
+    const user = userEvent.setup()
+    render(<UserDetailsForm />)
+
+    await user.type(screen.getByLabelText("Phone"), "5551234567")
+
+    expect(screen.getByLabelText("Phone")).toHaveValue("(555) 123-4567")
+  })
+
+  it("ignores non-digit characters typed into the phone number", async () => {
+    const user = userEvent.setup()
+    render(<UserDetailsForm />)
+
+    await user.type(screen.getByLabelText("Phone"), "55a5b12c34567")
+
+    expect(screen.getByLabelText("Phone")).toHaveValue("(555) 123-4567")
+  })
+
+  it("submits the phone number as digits only", async () => {
+    const user = userEvent.setup()
+    const onSubmit = vi.fn()
+    render(<UserDetailsForm onSubmit={onSubmit} />)
+
+    await user.type(screen.getByLabelText("Full Name"), "John Doe")
+    await user.type(screen.getByLabelText("Email"), "john@example.com")
+    await user.type(screen.getByLabelText("Phone"), "5551234567")
+    await user.click(screen.getByRole("button", { name: "Continue" }))
+
+    await waitFor(() => {
+      expect(onSubmit).toHaveBeenCalledWith(
+        expect.objectContaining({ phone: "5551234567" })
+      )
+    })
+  })
+
   it("sets aria-invalid on invalid inputs after submit", async () => {
     const user = userEvent.setup()
     render(<UserDetailsForm />)

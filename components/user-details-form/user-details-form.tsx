@@ -2,12 +2,14 @@
 
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { NumberFormatBase } from "react-number-format"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Field, FieldLabel, FieldGroup, FieldError } from "@/components/ui/field"
 import type { UserInfo } from "@/contexts/booking-context"
+import { phoneMask } from "@/lib/masks"
 import {
   userDetailsSchema,
   type UserDetailsFormValues,
@@ -89,12 +91,19 @@ export function UserDetailsForm({ className, onSubmit }: UserDetailsFormProps) {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid || undefined}>
                   <FieldLabel htmlFor="phone">Phone</FieldLabel>
-                  <Input
-                    {...field}
+                  <NumberFormatBase
+                    {...phoneMask}
+                    customInput={Input}
+                    valueIsNumericString
+                    value={field.value}
+                    onValueChange={({ value }) => field.onChange(value)}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    getInputRef={field.ref}
                     id="phone"
-                    autoComplete="tel"
                     type="tel"
-                    placeholder="5551234567"
+                    autoComplete="tel"
+                    placeholder="(555) 123-4567"
                     aria-invalid={fieldState.invalid || undefined}
                     aria-describedby={fieldState.invalid ? "phone-error" : undefined}
                   />
