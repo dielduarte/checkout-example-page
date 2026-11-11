@@ -58,6 +58,24 @@ describe("paymentDetailsSchema", () => {
       expect(result.error!.issues[0].message).toBe("Invalid card number")
     })
 
+    it.each([
+      ["Visa", "4111111111111111"],
+      ["Mastercard", "5500000000000004"],
+      ["Amex", "378282246310005"],
+    ])("accepts a valid %s number", async (_brand, cardNumber) => {
+      const { paymentDetailsSchema: schema } = await importSchemaWithNodeEnv("test")
+      const result = schema.safeParse({ ...validData, cardNumber })
+      expect(result.success).toBe(true)
+    })
+
+    it("reports only the length error for a short card number", async () => {
+      const { paymentDetailsSchema: schema } = await importSchemaWithNodeEnv("test")
+      const result = schema.safeParse({ ...validData, cardNumber: "411111111111" })
+      expect(result.error!.issues.map((issue) => issue.message)).toEqual([
+        "Card number must be between 13 and 19 digits",
+      ])
+    })
+
     it("bypasses Luhn check in development mode", async () => {
       const { paymentDetailsSchema: schema } = await importSchemaWithNodeEnv("development")
       const result = schema.safeParse({ ...validData, cardNumber: "4111111111111112" })

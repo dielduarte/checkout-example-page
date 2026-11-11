@@ -1,17 +1,19 @@
 import { z } from "zod"
-import { isValidLuhn } from "./luhn"
 
 const isDev = process.env.NODE_ENV === "development"
 
+const cardNumberFormat = z
+  .string()
+  .min(1, "Card number is required")
+  .regex(/^\d{13,19}$/, "Card number must be between 13 and 19 digits")
+
+// Luhn is skipped in development so any 13–19 digit number can be used locally.
+const cardNumber = isDev
+  ? cardNumberFormat
+  : cardNumberFormat.pipe(z.creditCard("Invalid card number"))
+
 export const paymentDetailsSchema = z.object({
-  cardNumber: z
-    .string()
-    .min(1, "Card number is required")
-    .regex(/^\d{13,19}$/, "Card number must be between 13 and 19 digits")
-    .refine(
-      (val) => isDev || isValidLuhn(val),
-      "Invalid card number"
-    ),
+  cardNumber,
   expiryDate: z
     .string()
     .min(1, "Expiry date is required")
