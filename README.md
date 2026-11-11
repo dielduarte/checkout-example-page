@@ -34,8 +34,7 @@ How I use AI is based on human in the loop idea, mainly because the human (engin
 - The Architecture, where the code should live, boundaries and modules responsabilities.
 - Tech stack and tooling, you don't really want AI to be installing random tools or duplicating code unnecessarily just to get the work done.
 
-My current setup is evolving still, but I used claude code + herdr for session management + plannotator to annotate on plans and cycle back with my coding agent.
-` 
+My current setup is evolving still, but I used claude code + herdr for session management + plannotator to annotate on plans and cycle back with my coding agent. I have a vps where I can delegate the work cloud agents, mostly used for research, pocs, things I can take a look later and are not the hight priority but I want this things to have progress in parallel anyway.
 
 How I prompt is envolving everyday, I'm still learning, but I see myself most productive when interating over small plans rather than a huge unique plan to create the whole platform in one go. That is how I can make sure I can follow the progress and make sure that everything generated is following the architecture defined by me.
 
