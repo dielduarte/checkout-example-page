@@ -1,21 +1,13 @@
 "use client"
 
+import type { z } from "zod"
+import type { userDetailsSchema } from "@/components/user-details-form/schema"
+import type { paymentDetailsSchema } from "@/components/payment-details-form/schema"
 import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react"
 
-export interface UserInfo {
-  fullName: string
-  email: string
-  phone: string
-  visitReason: string
-}
+export type UserInfo = z.output<typeof userDetailsSchema>
 
-export interface PaymentInfo {
-  cardNumber: string
-  expiryDate: string
-  cvv: string
-  billingZip: string
-  acceptedPolicy: boolean
-}
+export type PaymentInfo = z.output<typeof paymentDetailsSchema>
 
 export interface BookingState {
   userInfo: UserInfo | null

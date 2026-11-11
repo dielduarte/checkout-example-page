@@ -7,8 +7,8 @@ describe("ServicesCard", () => {
     render(
       <ServicesCard
         services={[
-          { name: "Botox", duration: "45 mins", price: "$200" },
-          { name: "Facial", duration: "30 mins", price: "$90" },
+          { id: "botox", name: "Botox", duration: "45 mins", price: "$200" },
+          { id: "facial", name: "Facial", duration: "30 mins", price: "$90" },
         ]}
       />
     )

@@ -6,9 +6,16 @@ export const companyData = {
   phone: "+1 123 4567 222",
 } as const
 
-export const servicesData = [
-  { name: "Botox", duration: "45 mins", price: "$200" },
-  { name: "Botox", duration: "45 mins", price: "$200" },
+export interface Service {
+  id: string
+  name: string
+  duration: string
+  price: string
+}
+
+export const servicesData: Service[] = [
+  { id: "service-1", name: "Botox", duration: "45 mins", price: "$200" },
+  { id: "service-2", name: "Botox", duration: "45 mins", price: "$200" },
 ]
 
 export const successData = {

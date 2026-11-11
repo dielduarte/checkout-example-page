@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { ServicesCard } from "./services-card"
+import { servicesData } from "@/lib/booking-data"
 
 const meta = {
   title: "Components/ServicesCard",
@@ -16,4 +17,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: { services: servicesData },
+}
