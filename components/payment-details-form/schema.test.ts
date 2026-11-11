@@ -198,8 +198,7 @@ describe("paymentDetailsSchema", () => {
     })
 
     it("rejects missing (defaults to undefined)", () => {
-      const { acceptedPolicy: _, ...rest } = validData
-      const result = paymentDetailsSchema.safeParse(rest)
+      const result = paymentDetailsSchema.safeParse({ ...validData, acceptedPolicy: undefined })
       expect(result.success).toBe(false)
     })
   })
