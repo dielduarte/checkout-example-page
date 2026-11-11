@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { CompanyInfo } from "./company-info"
+import { companyData } from "@/lib/booking-data"
 
 const meta = {
   title: "Components/CompanyInfo",
@@ -17,11 +18,5 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    logoUrl: "/images/spa-logo.png",
-    name: "Gold Spa",
-    address: "123 Serenity Lane\nTranquil Heights, CA 90210",
-    email: "hello@goldspa.com",
-    phone: "(555) 123-4567",
-  },
+  args: companyData,
 }

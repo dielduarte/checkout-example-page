@@ -1,7 +1,6 @@
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
 
 interface CompanyInfoProps {
   logoUrl: string
@@ -37,20 +36,24 @@ export function CompanyInfo({
           <h2 className="text-lg font-bold">{name}</h2>
         </div>
 
-        <div className="grid w-full grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
-          <Label className="text-muted-foreground flex items-start">Address</Label>
-          <span className="whitespace-pre-line">{address}</span>
+        <dl className="grid w-full grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
+          <dt className="text-muted-foreground font-medium leading-none">Address</dt>
+          <dd className="whitespace-pre-line">{address}</dd>
 
-          <Label className="text-muted-foreground">Email</Label>
-          <Button variant="link" asChild size="auto" className="justify-start">
-            <a href={`mailto:${email}`} >{email}</a>
-          </Button>
+          <dt className="text-muted-foreground font-medium leading-none flex items-center">Email</dt>
+          <dd>
+            <Button variant="link" asChild size="auto" className="justify-start">
+              <a href={`mailto:${email}`}>{email}</a>
+            </Button>
+          </dd>
 
-          <Label className="text-muted-foreground">Phone</Label>
-          <Button variant="link" asChild size="auto" className="justify-start">
-            <a href={`tel:${phone}`}>{phone}</a>
-          </Button>
-        </div>
+          <dt className="text-muted-foreground font-medium leading-none flex items-center">Phone</dt>
+          <dd>
+            <Button variant="link" asChild size="auto" className="justify-start">
+              <a href={`tel:${phone}`}>{phone}</a>
+            </Button>
+          </dd>
+        </dl>
       </CardContent>
     </Card>
   )
