@@ -34,7 +34,7 @@ How I use AI is based on human in the loop idea, mainly because the human (engin
 - The Architecture, where the code should live, boundaries and modules responsabilities.
 - Tech stack and tooling, you don't really want AI to be installing random tools or duplicating code unnecessarily just to get the work done.
 
-I used claudecode for this project plan mode + execution, and cursor for smart autocomplete when I had to manually update and adjust some stuff. To make it easier to understand my thinking, I created a /save-plan command for claude, the idea is that it would save in `plans` folder the plans I used AI to mainly drive the code + my initial prompt. Of course this is not saving the interactions after the first prompt, just initial prompt + final plan executed. When I used AI, I commited without any changes the AI generated code + plan, following the commit message format: `chore: ${task done} - AI + Plan
+My current setup is evolving still, but I used claude code + herdr for session management + plannotator to annotate on plans and cycle back with my coding agent.
 ` 
 
 How I prompt is envolving everyday, I'm still learning, but I see myself most productive when interating over small plans rather than a huge unique plan to create the whole platform in one go. That is how I can make sure I can follow the progress and make sure that everything generated is following the architecture defined by me.
