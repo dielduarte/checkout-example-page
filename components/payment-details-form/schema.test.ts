@@ -3,7 +3,7 @@ import { paymentDetailsSchema } from "./schema"
 
 const validData = {
   cardNumber: "4111111111111111",
-  expiryDate: "12/25",
+  expiryDate: "12/99",
   cvv: "123",
   billingZip: "12345",
   acceptedPolicy: true,
@@ -87,6 +87,26 @@ describe("paymentDetailsSchema", () => {
       const result = paymentDetailsSchema.safeParse({ ...validData, expiryDate: "12 / 25" })
       expect(result.success).toBe(false)
       expect(result.error!.issues[0].message).toBe("Expiry date must be in MM/YY format")
+    })
+
+    it.each(["00/99", "13/99"])("rejects invalid month %s", (expiryDate) => {
+      const result = paymentDetailsSchema.safeParse({ ...validData, expiryDate })
+      expect(result.success).toBe(false)
+      expect(result.error!.issues[0].message).toBe("Invalid month")
+    })
+
+    it("rejects an expired card", () => {
+      const result = paymentDetailsSchema.safeParse({ ...validData, expiryDate: "01/20" })
+      expect(result.success).toBe(false)
+      expect(result.error!.issues[0].message).toBe("Card has expired")
+    })
+
+    it("accepts a card expiring in the current month", () => {
+      const now = new Date()
+      const month = String(now.getMonth() + 1).padStart(2, "0")
+      const year = String(now.getFullYear()).slice(-2)
+      const result = paymentDetailsSchema.safeParse({ ...validData, expiryDate: `${month}/${year}` })
+      expect(result.success).toBe(true)
     })
 
     it("accepts standard MM/YY format", () => {

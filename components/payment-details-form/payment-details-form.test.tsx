@@ -130,7 +130,7 @@ describe("PaymentDetailsForm", () => {
     render(<PaymentDetailsForm onSubmit={onSubmit} />)
 
     await user.type(screen.getByLabelText("Card information"), "4111111111111111")
-    await user.type(screen.getByLabelText("Expiry date"), "12/25")
+    await user.type(screen.getByLabelText("Expiry date"), "12/99")
     await user.type(screen.getByLabelText("CVV"), "123")
     await user.type(screen.getByLabelText("Billing zip code"), "12345")
     await user.click(screen.getByRole("checkbox"))
@@ -139,7 +139,7 @@ describe("PaymentDetailsForm", () => {
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledWith({
         cardNumber: "4111111111111111",
-        expiryDate: "12/25",
+        expiryDate: "12/99",
         cvv: "123",
         billingZip: "12345",
         acceptedPolicy: true,
@@ -167,7 +167,7 @@ describe("PaymentDetailsForm", () => {
     render(<PaymentDetailsForm onSubmit={onSubmit} />)
 
     await user.type(screen.getByLabelText("Card information"), "4111111111111111")
-    await user.type(screen.getByLabelText("Expiry date"), "12/25")
+    await user.type(screen.getByLabelText("Expiry date"), "12/99")
     await user.type(screen.getByLabelText("CVV"), "123")
     await user.type(screen.getByLabelText("Billing zip code"), "12345")
     await user.click(screen.getByRole("button", { name: "Book appointment" }))
@@ -210,7 +210,7 @@ describe("PaymentDetailsForm", () => {
     render(<Form />)
 
     await user.type(screen.getByLabelText("Card information"), "4111111111111112")
-    await user.type(screen.getByLabelText("Expiry date"), "12/25")
+    await user.type(screen.getByLabelText("Expiry date"), "12/99")
     await user.type(screen.getByLabelText("CVV"), "123")
     await user.type(screen.getByLabelText("Billing zip code"), "12345")
     await user.click(screen.getByRole("checkbox"))
@@ -227,7 +227,7 @@ describe("PaymentDetailsForm", () => {
     render(<PaymentDetailsForm onSubmit={onSubmit} />)
 
     await user.type(screen.getByLabelText("Card information"), "4111 1111 1111 1111")
-    await user.type(screen.getByLabelText("Expiry date"), "12/25")
+    await user.type(screen.getByLabelText("Expiry date"), "12/99")
     await user.type(screen.getByLabelText("CVV"), "123")
     await user.type(screen.getByLabelText("Billing zip code"), "12345")
     await user.click(screen.getByRole("checkbox"))
@@ -262,6 +262,26 @@ describe("PaymentDetailsForm", () => {
     await user.type(screen.getByLabelText("Card information"), "abcd1234efgh5678")
 
     expect(screen.getByLabelText("Card information")).toHaveValue("1234 5678")
+  })
+
+  it("shows an error for an invalid expiry month", async () => {
+    const user = userEvent.setup()
+    render(<PaymentDetailsForm />)
+
+    await user.type(screen.getByLabelText("Expiry date"), "1329")
+    await user.tab()
+
+    expect(await screen.findByText("Invalid month")).toBeInTheDocument()
+  })
+
+  it("shows an error for an expired card", async () => {
+    const user = userEvent.setup()
+    render(<PaymentDetailsForm />)
+
+    await user.type(screen.getByLabelText("Expiry date"), "0120")
+    await user.tab()
+
+    expect(await screen.findByText("Card has expired")).toBeInTheDocument()
   })
 
   it("submits ZIP+4 with its dash", async () => {

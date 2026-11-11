@@ -15,7 +15,17 @@ export const paymentDetailsSchema = z.object({
   expiryDate: z
     .string()
     .min(1, "Expiry date is required")
-    .regex(/^\d{2}\/\d{2}$/, "Expiry date must be in MM/YY format"),
+    .regex(/^\d{2}\/\d{2}$/, { message: "Expiry date must be in MM/YY format", abort: true })
+    .refine((val) => {
+      const month = Number(val.slice(0, 2))
+      return month >= 1 && month <= 12
+    }, { message: "Invalid month", abort: true })
+    .refine((val) => {
+      const month = Number(val.slice(0, 2))
+      const year = 2000 + Number(val.slice(3))
+      const now = new Date()
+      return year > now.getFullYear() || (year === now.getFullYear() && month >= now.getMonth() + 1)
+    }, "Card has expired"),
   cvv: z
     .string()
     .min(1, "CVV is required")
